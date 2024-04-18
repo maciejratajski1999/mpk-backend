@@ -1,56 +1,27 @@
-# Getting started with Quarkus
+# Mapa utrudnień MPK - backend
 
-This is a minimal CRUD service exposing a couple of endpoints over REST.
+Ten projekt jest oparty na poradniku dostępnym na stronie [Quarkus][1].
 
-Under the hood, this demo uses:
+## Wymagania
 
-- RESTEasy to expose the REST endpoints
-- REST-assured and JUnit 5 for endpoint testing
-- Panache and Hibernate for persistence 
-- Dev services 
+- System operacyjny: Windows
+- [Quarkus CLI][2]
+- [Chocolatey Software Manager][3] (do instalacji Quarkus CLI)
+- [JDK 22][4] (dodane do PATH w systemie Windows)
+- [Docker Desktop dla Windows][5]
 
-## Requirements
+## Uruchomienie serwera bazy danych
 
-To compile and run this demo you will need:
+1. Uruchom klienta Docker na Windows na domyślnym porcie.
+2. Następnie użyj komendy `quarkus dev` w folderze z projektem.
 
-- JDK 17+
-- A container runtime, such as Docker or Podman
+## Endpoints API
 
-### Configuring JDK 17+
+- `GET http://localhost:8080/vehicle?id=9100` - zwraca pojazd o podanym ID.
+- `GET http://localhost:8080/vehicle/ids` - wyświetla wszystkie pojazdy w bazie danych.
 
-Make sure that the `JAVA_HOME` environment variables have
-been set, and that a JDK 17+ `java` command is on the path.
-
-### Live coding with Quarkus
-
-The Maven Quarkus plugin provides a development mode that supports
-live coding. To try this out:
-
-> ./mvnw quarkus:dev
-
-This command will leave Quarkus running in the foreground listening on port 8080.
-
-1. Visit the default endpoint: [http://127.0.0.1:8080](http://127.0.0.1:8080).
-   - Make a simple change to [src/main/resources/META-INF/resources/index.html](src/main/resources/META-INF/resources/index.html) file.
-   - Refresh the browser to see the updated page.
-2. Visit the `/hello` endpoint: [http://127.0.0.1:8080/hello](http://127.0.0.1:8080/hello)
-   - Update the response in [src/main/java/org/acme/quickstart/GreetingResource.java](src/main/java/org/acme/quickstart/GreetingResource.java). Replace `hello` with `hello there` in the `hello()` method.
-   - Refresh the browser. You should now see `hello there`.
-   - Undo the change, so the method returns `hello` again.
-   - Refresh the browser. You should now see `hello`.
-
-### Run Quarkus in JVM mode
-
-When you're done iterating in developer mode, you can run the application as a
-conventional jar file.
-
-First compile it:
-
-> ./mvnw package
-
-Then run it:
-
-> java -jar ./target/quarkus-app/quarkus-run.jar
-
-Have a look at how fast it boots, or measure the total native memory consumption.
-
+[1]: https://quarkus.io/guides/getting-started-dev-services
+[2]: https://quarkus.io/guides/cli-tooling
+[3]: https://chocolatey.org/
+[4]: https://www.oracle.com/java/technologies/downloads/
+[5]: https://docs.docker.com/desktop/install/windows-install/
