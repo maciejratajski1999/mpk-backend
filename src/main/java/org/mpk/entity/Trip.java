@@ -1,13 +1,11 @@
 package org.mpk.entity;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntity;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Column;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.JoinColumn;
+import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+import jakarta.persistence.*;
 
 @Entity
-public class Trip extends PanacheEntity {
+public class Trip extends PanacheEntityBase {
+    @Id
     @Column(name = "trip_id")
     public Integer tripId;
 

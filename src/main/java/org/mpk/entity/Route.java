@@ -1,11 +1,13 @@
 package org.mpk.entity;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntity;
+import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import jakarta.persistence.Column;
 
 @Entity
-public class Route extends PanacheEntity {
+public class Route extends PanacheEntityBase {
+    @Id
     @Column(name = "route_id")
     public Integer routeId;
 
