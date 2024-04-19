@@ -6,6 +6,7 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
+import org.mpk.entity.Vehicle;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,7 +17,7 @@ public class VehicleResource {
     @GET
     @Transactional
     @Produces(MediaType.TEXT_PLAIN)
-    public String hello(@QueryParam("id") int id) {
+    public String vehicle(@QueryParam("id") Integer id) {
         Vehicle vehicle = new Vehicle();
         vehicle.vehicleID = id;
         vehicle.persist();
