@@ -6,12 +6,11 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 import org.mpk.entity.Vehicle;
+import java.util.*;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-@Path("/vehicle")
+@Path("/vehicles")
 public class VehicleResource {
 
     @GET
@@ -24,13 +23,25 @@ public class VehicleResource {
         return "Vehicle #" + id;
     }
 
+    private List<Vehicle> getVehiclesList(){
+        List <Vehicle> vehiclesList = Vehicle.listAll();
+        return vehiclesList;
+    }
+
+    private List<Map<String, Object>> getVehiclesMaps(List<Vehicle> vehiclesList){
+        List<Map<String, Object>> vehiclesMaps = new ArrayList<>();
+        for (Vehicle vehicle : vehiclesList){
+            Map<String, Object> vehicleMap = new HashMap<>();
+            vehicleMap.put("vehicleID", vehicle.vehicleID);
+            vehiclesMaps.add(vehicleMap);
+        }
+        return vehiclesMaps;
+    }
+
     @GET
     @Path("ids")
-    @Produces(MediaType.TEXT_PLAIN)
-    public String vehicleIDs() {
-        List<Vehicle> vehicles = Vehicle.listAll();
-        String ids = vehicles.stream().map(g -> (Long.toString(g.vehicleID)))
-                .collect(Collectors.joining(", "));
-        return "Registered vehicles: " + ids;
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response list() {
+        return Response.ok(getVehiclesMaps(getVehiclesList())).build();
     }
 }
