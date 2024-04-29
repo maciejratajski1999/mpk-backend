@@ -1,7 +1,7 @@
-INSERT INTO Vehicle(id, vehicleID)
-VALUES (nextval('Vehicle_SEQ'), 2024);
-INSERT INTO Vehicle(id, vehicleID)
-VALUES (nextval('Vehicle_SEQ'), 2025);
+INSERT INTO Vehicle(id, vehicle_id)
+VALUES (1, 2024);
+INSERT INTO Vehicle(id, vehicle_id)
+VALUES (2, 2025);
 INSERT INTO Route(route_id, route_type, valid_from)
 VALUES (101, 1, '2024-01-01');
 INSERT INTO Route(route_id, route_type, valid_from)
