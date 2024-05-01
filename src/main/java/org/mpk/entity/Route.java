@@ -16,5 +16,6 @@ public class Route extends EntityBase {
 
     @Column(name = "valid_from")
     public java.sql.Date validFrom;
-    
+
+
 }
