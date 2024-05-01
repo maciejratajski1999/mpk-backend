@@ -12,5 +12,6 @@ public class Vehicle extends PanacheEntityBase{
     @Column(name = "vehicle_id")
     public Integer vehicleID;
     @Id
+    @Column(name="id")
     private Long id;
 }
