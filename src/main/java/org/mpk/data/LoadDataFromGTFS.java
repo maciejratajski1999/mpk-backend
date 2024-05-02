@@ -4,7 +4,9 @@ import io.quarkus.hibernate.reactive.panache.Panache;
 import io.quarkus.logging.Log;
 import io.smallrye.mutiny.Uni;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import org.hibernate.reactive.mutiny.Mutiny;
 import org.mpk.entity.EntityBase;
 
 import java.io.BufferedReader;
@@ -17,6 +19,9 @@ import java.util.Map;
 
 @ApplicationScoped
 public class LoadDataFromGTFS {
+
+    @Inject
+    Mutiny.SessionFactory sf;
 
 
     public List<Map<String, String>> parseTxtFile(Path path) {
@@ -40,29 +45,25 @@ public class LoadDataFromGTFS {
 
 
 
-@Transactional
+//@Transactional
     public <T extends EntityBase> Uni<Void> loadEntities(Class<T> entityClass, Path path) {
-        return Uni.createFrom().deferred(() -> Uni.createFrom().item(parseTxtFile(path)))
-                .onItem().transformToUni(parsedFileData -> {
-                    Log.info("jestem tu!\n 1\n");
-                    return Uni.createFrom().item(() -> {
-                        Log.info("jestem tu!\n 3\n");
-                        for (Map<String, String> entry : parsedFileData) {
-                            Log.info("jestem tu!\n 2\n");
-                            try {
-                                Log.info(entry.toString());
-                                T entity = entityClass.getDeclaredConstructor().newInstance();
-                                entity.populateFromGTFS(entry);
-                                return Panache.withTransaction(() ->
-                                        Panache.getSession().invoke(session -> session.persist(entity)));
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
-                        return null;
-                    });
-                }).replaceWithVoid();
+        List<Uni<Void>> unis = new ArrayList<>();
+        List<Map<String, String>> parsedData = parseTxtFile(path);
+        for (Map<String, String> entry : parsedData) {
+            try {
+                Log.info(entry.toString());
+                T entity = entityClass.getDeclaredConstructor().newInstance();
+                entity.populateFromGTFS(entry);
+                unis.add(sf.withTransaction(session -> session.persist(entity).onItem().ignore().andContinueWithNull()));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return unis.isEmpty() ? Uni.createFrom().voidItem() : Uni.combine().all().unis(unis).discardItems();
     }
+
+
+
 
 
 
