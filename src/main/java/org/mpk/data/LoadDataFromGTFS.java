@@ -1,13 +1,22 @@
 package org.mpk.data;
 
 import io.quarkus.hibernate.reactive.panache.Panache;
+import io.quarkus.hibernate.reactive.panache.common.WithSession;
+import io.quarkus.hibernate.reactive.panache.common.WithTransaction;
 import io.quarkus.logging.Log;
 import io.smallrye.mutiny.Uni;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import jakarta.ws.rs.PUT;
+import jakarta.ws.rs.core.Response;
 import org.hibernate.reactive.mutiny.Mutiny;
 import org.mpk.entity.EntityBase;
+import org.mpk.entity.Route;
+import org.mpk.repository.BaseRepository;
+import org.mpk.repository.RouteRepository;
+import org.mpk.resource.RouteResource;
+import org.mpk.service.RouteService;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -17,12 +26,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static io.quarkus.hibernate.reactive.panache.Panache.withTransaction;
+
 @ApplicationScoped
 public class LoadDataFromGTFS {
 
     @Inject
-    Mutiny.SessionFactory sf;
+    RouteRepository repository;
 
+    @Inject
+    RouteService service;
+
+    @Inject
+    Mutiny.SessionFactory sf;
 
     public List<Map<String, String>> parseTxtFile(Path path) {
         List<Map<String, String>> data = new ArrayList<>();
@@ -43,28 +59,13 @@ public class LoadDataFromGTFS {
         return data;
     }
 
-
-
-//@Transactional
-    public <T extends EntityBase> Uni<Void> loadEntities(Class<T> entityClass, Path path) {
-        List<Uni<Void>> unis = new ArrayList<>();
+    public <T extends EntityBase> void loadEntities(Class<T> entityClass, Path path, String endpoint) {
+        List<Uni<T>> unis = new ArrayList<>();
         List<Map<String, String>> parsedData = parseTxtFile(path);
         for (Map<String, String> entry : parsedData) {
-            try {
-                Log.info(entry.toString());
-                T entity = entityClass.getDeclaredConstructor().newInstance();
-                entity.populateFromGTFS(entry);
-                unis.add(sf.withTransaction(session -> session.persist(entity).onItem().ignore().andContinueWithNull()));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            service.createRoute(entry);
         }
-        return unis.isEmpty() ? Uni.createFrom().voidItem() : Uni.combine().all().unis(unis).discardItems();
     }
-
-
-
-
 
 
 }

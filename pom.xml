@@ -33,14 +33,6 @@
     </dependency>
     <dependency>
       <groupId>io.quarkus</groupId>
-      <artifactId>quarkus-jdbc-postgresql</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>io.quarkus</groupId>
-      <artifactId>quarkus-hibernate-reactive-rest-data-panache</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>io.quarkus</groupId>
       <artifactId>quarkus-reactive-pg-client</artifactId>
     </dependency>
     <dependency>
@@ -49,17 +41,33 @@
     </dependency>
     <dependency>
       <groupId>io.quarkus</groupId>
-      <artifactId>quarkus-hibernate-orm</artifactId>
+      <artifactId>quarkus-hibernate-reactive-panache</artifactId>
     </dependency>
     <dependency>
       <groupId>io.quarkus</groupId>
-      <artifactId>quarkus-hibernate-reactive</artifactId>
+      <artifactId>quarkus-test-vertx</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-test-hibernate-reactive-panache</artifactId>
+      <version>3.3.3</version>
+      <scope>test</scope>
+    </dependency>
+    <!-- Testing: -->
+    <!-- Testing: -->
+    <!-- https://mvnrepository.com/artifact/io.quarkus/quarkus-test-vertx -->
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-test-vertx</artifactId>
+      <version>3.10.0</version>
+      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-junit5</artifactId>
       <scope>test</scope>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/io.quarkus/quarkus-test-hibernate-reactive-panache -->
     <dependency>
       <groupId>io.rest-assured</groupId>
       <artifactId>rest-assured</artifactId>

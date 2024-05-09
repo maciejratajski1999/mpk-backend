@@ -1,17 +1,24 @@
 package org.mpk.entity;
 
+import jakarta.persistence.Cacheable;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 import jakarta.persistence.Column;
+import jakarta.persistence.Id;
 
 import java.util.Map;
 
 @Entity
+@Cacheable
 public class Route extends EntityBase {
 
+    public Route(){}
+
+    public Route(String routeId){
+        this.routeId = routeId;
+    }
 
     @Id
-    @Column(name = "route_id")
+    @Column(name = "route_id", unique = true, length = 20)
     public String routeId;
 
     @Column(name = "route_type")
@@ -26,7 +33,4 @@ public class Route extends EntityBase {
         this.routeType= Integer.valueOf(entry.get("route_type"));
         this.validFrom= entry.get("valid_from");
     }
-
 }
-
-

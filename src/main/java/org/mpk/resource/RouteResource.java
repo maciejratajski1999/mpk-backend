@@ -1,19 +1,50 @@
 package org.mpk.resource;
 
-import io.quarkus.hibernate.reactive.rest.data.panache.PanacheEntityResource;
-import io.quarkus.rest.data.panache.ResourceProperties;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
+
+import io.quarkus.hibernate.reactive.panache.Panache;
+import io.smallrye.mutiny.Uni;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.Response;
 import org.mpk.entity.Route;
 
-@ResourceProperties(path = "routes")
-public interface RouteResource extends PanacheEntityResource<Route, Long> {
+import java.util.List;
+
+import static jakarta.ws.rs.core.Response.Status.CREATED;
+
+@Path("/routes")
+@ApplicationScoped
+@Produces("application/json")
+@Consumes("application/json")
+public class RouteResource{
+
+    @GET
+    public Uni<List<Route>> get() {
+        return Route.listAll();
+    }
+
+    @GET
+    @Path("{routeId}")
+    public Uni<Route> getSingle(String routeId) {
+//        Log.info(Route.listAll());
+        return Route.findById(routeId);
+    }
+
+    @POST
+    public Uni<Response> create(Route route) {
+        if (route == null){
+            throw new WebApplicationException("Route route is null", 422);
+        }
+        return Panache.withTransaction(route::persist)
+                .replaceWith(Response.ok(route).status(CREATED)::build);
+    }
+
 
     @GET
     @Path("/hello")
     @Produces("text/plain")
-    default String hello(){
+    public String hello(){
         return Route.hello;
     }
+
 }

@@ -4,6 +4,7 @@ import io.quarkus.hibernate.reactive.panache.PanacheEntityBase;
 
 import java.util.Map;
 
+//@MappedSuperclass
 public abstract class EntityBase extends PanacheEntityBase {
     public static String hello = "hello from EntityBase :)";
 
