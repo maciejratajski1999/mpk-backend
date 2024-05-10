@@ -71,11 +71,20 @@ Po uruchomieniu kontenera PostgreSQL, uruchom aplikację w trybie deweloperskim.
 Spróbuj dodać trasę za pomocą poniższej komendy:
 
 ```bash
-curl -X POST http://localhost:8080/routes -H 'Content-Type: application/json' -d '{"routeId": "exampleRouteId", "routeType": 1, "validFrom": "2024-05-10"}'
+curl --header "Content-Type: application/json" --request POST --data "{\"routeId\": \"CurlTest\", \"routeType\": 2, \"validFrom\": \"2024-04-28\"}" localhost:8080/routes
 ```
 ### Weryfikacja dodanej trasy
 Zweryfikuj, czy trasa została poprawnie dodana, odwiedzając http://localhost:8080/routes/exampleRouteId.
 
+```bash
+curl -X POST -H "Content-Type: application/json" -d '{"tripId":1,"route":{"routeId":"Testowa"},"tripHeadsign":"Test Head Sign","directionId":1,"shapeId":1,"variantId":1}' http://localhost:8080/trips
+```
+```bash
+curl -X POST -H "Content-Type: application/json" -d '{"posId":1,"vehicle":{"vehicleID":1},"posLat":51.107883,"posLon":17.038538,"timestamp":"2024-05-06T15:01:51Z"}' http://localhost:8080/vehiclepositions
+```
+```bash
+curl -X POST -H "Content-Type: application/json" -d '{"vehicleID":1,"trip":{"tripId":1}}' http://localhost:8080/vehicles
+```
 
 [1]: https://quarkus.io/guides/getting-started-dev-services
 [2]: https://quarkus.io/guides/cli-tooling
