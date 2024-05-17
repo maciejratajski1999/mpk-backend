@@ -9,6 +9,7 @@ import java.util.Map;
 public class VehiclePosition extends EntityBase {
 
     @Id
+    @GeneratedValue
     @Column(name = "pos_id")
     public Integer posId;
 
@@ -34,7 +35,6 @@ public class VehiclePosition extends EntityBase {
     public static Uni<VehiclePosition> fromString(String vehiclePositionEntry) {
         String[] parts = vehiclePositionEntry.split(";");
         VehiclePosition vehiclePosition = new VehiclePosition();
-        vehiclePosition.posId = Integer.parseInt(parts[0]);
         vehiclePosition.posLat = Double.parseDouble(parts[1]);
         vehiclePosition.posLon = Double.parseDouble(parts[2]);
         vehiclePosition.timestamp = parts[3];
