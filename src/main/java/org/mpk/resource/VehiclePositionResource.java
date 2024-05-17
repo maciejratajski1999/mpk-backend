@@ -13,7 +13,7 @@ import static jakarta.ws.rs.core.Response.Status.CREATED;
 @Path("/vehiclepositions")
 @ApplicationScoped
 @Produces("application/json")
-@Consumes("application/json")
+@Consumes("text/plain")
 public class VehiclePositionResource {
 
     @GET
@@ -27,12 +27,19 @@ public class VehiclePositionResource {
         return VehiclePosition.findById(posId);
     }
 
+//    @POST
+//    public Uni<Response> create(VehiclePosition vehiclePosition) {
+//        if (vehiclePosition == null){
+//            throw new WebApplicationException("VehiclePosition is null", 422);
+//        }
+//        return Panache.withTransaction(vehiclePosition::persist)
+//                .replaceWith(Response.ok(vehiclePosition).status(CREATED)::build);
+//    }
+
     @POST
-    public Uni<Response> create(VehiclePosition vehiclePosition) {
-        if (vehiclePosition == null){
-            throw new WebApplicationException("VehiclePosition is null", 422);
-        }
-        return Panache.withTransaction(vehiclePosition::persist)
-                .replaceWith(Response.ok(vehiclePosition).status(CREATED)::build);
+    public Uni<Response> create(String vehiclePositionEntry) {
+        return VehiclePosition.fromString(vehiclePositionEntry)
+                .onItem().transformToUni(vehiclePosition -> Panache.withTransaction(vehiclePosition::persist))
+                .replaceWith(Response.ok().status(CREATED)::build);
     }
 }

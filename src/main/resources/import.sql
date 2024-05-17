@@ -7,5 +7,6 @@ INSERT INTO Trip(trip_id, route_id, trip_headsign, direction_id, shape_id, varia
 INSERT INTO Trip(trip_id, route_id, trip_headsign, direction_id, shape_id, variant_id) VALUES (2, 'R2', 'HeadSign2', 2, 200, 20);
 
 -- Przykłady dla encji Vehicle
-INSERT INTO Vehicle(id, vehicle_id) VALUES (1, 1001);
-INSERT INTO Vehicle(id, vehicle_id) VALUES (2, 1002);
+INSERT INTO Vehicle(vehicle_id) VALUES (1001);
+INSERT INTO Vehicle(vehicle_id) VALUES (1002);
+INSERT INTO VehiclePosition(pos_id, vehicle_id, pos_lat, pos_lon, timestamp) VALUES (2, 1002, 0.0, 0.0, 'dzisiaj');

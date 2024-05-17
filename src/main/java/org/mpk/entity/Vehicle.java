@@ -6,12 +6,9 @@ import jakarta.persistence.*;
 @Entity
 public class Vehicle extends PanacheEntityBase{
 
-
+    @Id
     @Column(name = "vehicle_id")
     public Integer vehicleID;
-    @Id
-    @Column(name="id")
-    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "trip_id", referencedColumnName = "trip_id")

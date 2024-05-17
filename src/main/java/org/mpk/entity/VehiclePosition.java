@@ -1,5 +1,6 @@
 package org.mpk.entity;
 
+import io.smallrye.mutiny.Uni;
 import jakarta.persistence.*;
 
 import java.util.Map;
@@ -24,8 +25,23 @@ public class VehiclePosition extends EntityBase {
     @Column(name = "timestamp")
     public String timestamp;
 
+
     @Override
     public void populateFromGTFS(Map<String, String> entry) {
 
     }
+
+    public static Uni<VehiclePosition> fromString(String vehiclePositionEntry) {
+        String[] parts = vehiclePositionEntry.split(";");
+        VehiclePosition vehiclePosition = new VehiclePosition();
+        vehiclePosition.posId = Integer.parseInt(parts[0]);
+        vehiclePosition.posLat = Double.parseDouble(parts[1]);
+        vehiclePosition.posLon = Double.parseDouble(parts[2]);
+        vehiclePosition.timestamp = parts[3];
+        return Vehicle.findById(Integer.parseInt(parts[0])).onItem().transform(vehicle -> {
+            vehiclePosition.vehicle = (Vehicle) vehicle;
+            return vehiclePosition;
+        });
+    }
+
 }
