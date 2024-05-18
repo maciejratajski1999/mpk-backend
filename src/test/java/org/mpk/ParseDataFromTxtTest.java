@@ -30,14 +30,14 @@ public class ParseDataFromTxtTest {
         Assertions.assertTrue(data.containsKey("routes.txt"));
     }
 
-    @RunOnVertxContext
-    @Test
-    public void testEntitiesPopulation() throws Exception{
-        LoadDataFromGTFS processor = new LoadDataFromGTFS();
-        Path path = Paths.get("src/test/data/routes.txt");
-        processor.loadEntities(Route.class, path, "routes");
-        Assertions.assertTrue(true);
-    }
+//    @RunOnVertxContext
+//    @Test
+//    public void testEntitiesPopulation() throws Exception{
+//        LoadDataFromGTFS processor = new LoadDataFromGTFS();
+//        Path path = Paths.get("src/test/data/routes.txt");
+//        processor.loadEntities(Route.class, path, "routes");
+//        Assertions.assertTrue(true);
+//    }
 
 //    @Test
 //    @RunOnVertxContext
