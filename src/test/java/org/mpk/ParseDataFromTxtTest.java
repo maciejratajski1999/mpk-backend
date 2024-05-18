@@ -34,7 +34,7 @@ public class ParseDataFromTxtTest {
     @Test
     public void testEntitiesPopulation() throws Exception{
         LoadDataFromGTFS processor = new LoadDataFromGTFS();
-        Path path = Paths.get("src/test/data/routes_test.txt");
+        Path path = Paths.get("src/test/data/routes.txt");
         processor.loadEntities(Route.class, path, "routes");
         Assertions.assertTrue(true);
     }
