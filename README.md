@@ -35,20 +35,12 @@ docker run --hostname=147010e54885 --mac-address=02:42:ac:11:00:02 --env=POSTGRE
 Docker powinien automatycznie pobrać potrzebne dependencies z internetu.
 
 ### Tworzenie tabeli w PostgreSQL
-Uruchom terminal kontenera i wprowadź poniższe komendy:
+Uruchom terminal kontenera i zaloguj się do kontenera (opcjonalne):
 ```bash
 psql -h localhost -U quarkus_test -d quarkus_test
-create table routes
-(
-    route_id   int  not null
-        primary key,
-    route_type int  null,
-    valid_from date null
-);
-  
 \dt
 ```
-Jeżeli nie stworzysz potrzebnych tablic, Quarkus spróbuje je stworzyć.
+Jeżeli nie stworzysz potrzebnych tablic, Quarkus spróbuje je stworzyć sam.
 
 ## Uruchomienie aplikacji Quarkus
 
@@ -85,7 +77,11 @@ curl -X POST -H "Content-Type: application/json" -d '{"posId":1,"vehicle":{"vehi
 ```bash
 curl -X POST -H "Content-Type: application/json" -d '{"vehicleID":1,"trip":{"tripId":1}}' http://localhost:8080/vehicles
 ```
-
+## Testowa trasa:
+w folderze src/test/script wyślij paczkę z pojazdu o ID 1001 co sekundę, ze źródła trasa.txt:
+```batch
+.\testVehiclePositions.bat .\trasa.txt 1001 1
+```
 [1]: https://quarkus.io/guides/getting-started-dev-services
 [2]: https://quarkus.io/guides/cli-tooling
 [3]: https://chocolatey.org/
