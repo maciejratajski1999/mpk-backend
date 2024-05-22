@@ -1,10 +1,7 @@
 package org.mpk.entity;
 
-import io.quarkus.hibernate.reactive.panache.PanacheEntityBase;
-import io.quarkus.hibernate.reactive.panache.common.WithTransaction;
-import jakarta.inject.Inject;
+import io.quarkus.logging.Log;
 import jakarta.persistence.*;
-import org.hibernate.reactive.mutiny.Mutiny;
 
 import java.util.Map;
 
@@ -14,8 +11,11 @@ public class Trip extends EntityBase {
     @Column(name = "trip_id")
     public String tripId;
 
+    @Column(name="route_id")
+    public String routeId;
+
     @ManyToOne
-    @JoinColumn(name = "route_id", referencedColumnName = "route_id")
+    @JoinColumn(name = "route_id", referencedColumnName = "route_id", insertable=false, updatable=false)
     public Route route;
 
     @Column(name = "trip_headsign")
@@ -34,7 +34,7 @@ public class Trip extends EntityBase {
     @Override
     public void populateFromGTFS(Map<String, String> entry){
         this.tripId = entry.get("trip_id");
-//        this.route = (Route) sf.withTransaction(session -> Route.findById(entry.get("route_id"))).await().indefinitely();
+        this.routeId = entry.get("route_id");
         this.tripHeadsign = entry.get("trip_headsign");
         this.directionId = Integer.valueOf(entry.get("direction_id"));
         this.shapeId = Integer.valueOf(entry.get("shape_id"));

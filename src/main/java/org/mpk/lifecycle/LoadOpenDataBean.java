@@ -22,15 +22,15 @@ public class LoadOpenDataBean {
 
     private Map<String, Class<? extends EntityBase>> buildFileToEntityMap() {
         Map<String, Class<? extends EntityBase>> fileToEntityMap = new HashMap<>();
-        fileToEntityMap.put("routes.txt", Route.class);
         fileToEntityMap.put("trips_test.txt", Trip.class);
+        fileToEntityMap.put("routes_test.txt", Route.class);
         return fileToEntityMap;
     }
+
     @Startup
     void onStart(@Observes StartupEvent event, Mutiny.SessionFactory sf) throws Throwable {
         LoadDataFromGTFS processor = new LoadDataFromGTFS();
         Map<String, Class<? extends EntityBase>> fileToEntityMap = buildFileToEntityMap();
-
         for (Map.Entry<String, Class<? extends EntityBase>> entry : fileToEntityMap.entrySet()) {
             Path path = Paths.get("src/data/" + entry.getKey());
             List<Map<String, String>> parsedData = processor.parseTxtFile(path);
@@ -41,5 +41,5 @@ public class LoadOpenDataBean {
             }
         }
     }
-
 }
+

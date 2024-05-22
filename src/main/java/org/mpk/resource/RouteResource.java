@@ -7,8 +7,12 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Response;
 import org.mpk.entity.Route;
+import org.mpk.entity.VehiclePosition;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static jakarta.ws.rs.core.Response.Status.CREATED;
 
@@ -26,7 +30,6 @@ public class RouteResource{
     @GET
     @Path("{routeId}")
     public Uni<Route> getSingle(String routeId) {
-//        Log.info(Route.listAll());
         return Route.findById(routeId);
     }
 
@@ -40,11 +43,22 @@ public class RouteResource{
     }
 
 
-    @GET
-    @Path("/hello")
-    @Produces("text/plain")
-    public String hello(){
-        return Route.hello;
-    }
+//    @GET
+//    @Path("/latest-positions")
+//    public Uni<List<VehiclePosition>> getLatestPositions(@QueryParam("routeIds") List<String> routeIds) {
+//          return Panache
+//                .withTransaction(() -> VehiclePosition.find("vehicle.trip.route.routeId IN ?1 ORDER BY timestamp DESC", routeIds).list())
+//                .onItem().transform(vehiclePositions -> {
+//                    Map<String, VehiclePosition> latestPositionsByRoute = new HashMap<>();
+//                    for (VehiclePosition position : vehiclePositions) {
+//                        String routeId =  position.vehicle.trip.route.routeId;
+//                        if (!latestPositionsByRoute.containsKey(routeId)) {
+//                            latestPositionsByRoute.put(routeId, position);
+//                        }
+//                    }
+//                    return new ArrayList<>(latestPositionsByRoute.values());
+//                });
+//    }
+
 
 }

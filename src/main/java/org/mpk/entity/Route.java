@@ -1,5 +1,6 @@
 package org.mpk.entity;
 
+import io.quarkus.logging.Log;
 import jakarta.persistence.Cacheable;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Column;
