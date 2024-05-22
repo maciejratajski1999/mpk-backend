@@ -1,7 +1,12 @@
-﻿route_id,service_id,trip_id,trip_headsign,direction_id,shape_id,brigade_id,vehicle_id,variant_id
-A,3,3_13343765,"Zajezdnia Obornicka",0,837732,2,1,837732
-A,3,3_13343780,"Zajezdnia Obornicka",0,837732,3,1,837732
-A,3,3_13343811,"Zajezdnia Obornicka",0,837732,5,1,837732
-A,3,3_13343625,"KOSZAROWA (Szpital)",1,838672,22,1,838672
-A,3,3_13343736,"KOSZAROWA (Szpital)",1,838672,1,2,838672
-A,3,3_13343738,"KOSZAROWA (Szpital)",1,838672,1,2,838672
+route_id,service_id,trip_id,trip_headsign,direction_id,shape_id,brigade_id,vehicle_id,variant_id
+A,3,3_13404996,"Zajezdnia Obornicka",0,837732,2,1,837732
+A,3,3_13405011,"Zajezdnia Obornicka",0,837732,3,1,837732
+A,3,3_13405042,"Zajezdnia Obornicka",0,837732,5,1,837732
+A,3,3_13404856,"KOSZAROWA (Szpital)",1,838672,22,1,838672
+A,3,3_13404967,"KOSZAROWA (Szpital)",1,838672,1,2,838672
+A,3,3_13404969,"KOSZAROWA (Szpital)",1,838672,1,2,838672
+A,3,3_13404971,"KOSZAROWA (Szpital)",1,838672,1,2,838672
+A,3,3_13404973,"KOSZAROWA (Szpital)",1,838672,1,2,838672
+A,3,3_13404975,"KOSZAROWA (Szpital)",1,838672,1,2,838672
+A,3,3_13404977,"KOSZAROWA (Szpital)",1,838672,1,2,838672
+A,3,3_13404979,"KOSZAROWA (Szpital)",1,838672,1,2,838672
