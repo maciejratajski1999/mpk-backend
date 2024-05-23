@@ -7,6 +7,7 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Response;
 import org.mpk.entity.Trip;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static jakarta.ws.rs.core.Response.Status.CREATED;
@@ -26,6 +27,13 @@ public class TripResource {
     @Path("{tripId}")
     public Uni<Trip> getSingle(Integer tripId) {
         return Trip.findById(tripId);
+    }
+
+    @GET
+    @Path("/gettrips")
+    public Uni<List<Trip>> getTripsForRoutes(@QueryParam("routeIds") String routeIdsString) {
+        List<String> routeIds = Arrays.asList(routeIdsString.split(","));
+        return Trip.list("route.routeId in ?1", routeIds);
     }
 
     @POST

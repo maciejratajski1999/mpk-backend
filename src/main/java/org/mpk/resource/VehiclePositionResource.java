@@ -9,6 +9,7 @@ import io.smallrye.mutiny.Uni;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Response;
+import org.mpk.entity.Trip;
 import org.mpk.entity.Vehicle;
 import org.mpk.entity.VehiclePosition;
 
@@ -52,16 +53,10 @@ public class VehiclePositionResource {
         }
         routeIds.forEach(routeId -> Log.info(routeId.toString()));
 
-        // Zwraca wszystkie VehiclePosition, które mają vehicle.trip.route.routeId w liście routeIds
-//        return Vehicle.listAll()
-//                .onItem().transformToMulti(vehicles -> Multi.createFrom().iterable(vehicles))
-//                .onItem().castTo(Vehicle.class)
-//                .filter(vehicle -> routeIds.contains(vehicle.trip.route.routeId))
-//                .onItem().transformToUniAndConcatenate(vehicle ->
-//                    VehiclePosition.find("vehicle.vehicleID = ?1 ORDER BY timestamp DESC", (VehiclePosition) vehicle.vehicleID)
-//                    .firstResult())
-//                .collect().asList();
-        return  VehiclePosition.findAll(Sort.by("timestamp").descending()).list();
+
+        return  VehiclePosition.list("vehicle.trip.route.routeId in ?1",
+                Sort.by("timestamp").descending(),
+                routeIds);
     }
 
 
