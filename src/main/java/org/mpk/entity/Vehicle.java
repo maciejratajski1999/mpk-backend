@@ -10,7 +10,10 @@ public class Vehicle extends PanacheEntityBase{
     @Column(name = "vehicle_id")
     public Integer vehicleID;
 
+    @Column(name="trip_id")
+    public String tripId;
+
     @ManyToOne
-    @JoinColumn(name = "trip_id", referencedColumnName = "trip_id")
+    @JoinColumn(name = "trip_id", referencedColumnName = "trip_id", insertable=false, updatable=false)
     public Trip trip;
 }
