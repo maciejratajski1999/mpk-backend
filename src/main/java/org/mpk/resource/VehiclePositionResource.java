@@ -1,21 +1,17 @@
 package org.mpk.resource;
 
 import io.quarkus.hibernate.reactive.panache.Panache;
-import io.quarkus.hibernate.reactive.panache.PanacheEntityBase;
 import io.quarkus.logging.Log;
-import io.quarkus.panache.common.Sort;
 import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.Uni;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Response;
-import org.mpk.entity.Trip;
 import org.mpk.entity.Vehicle;
 import org.mpk.entity.VehiclePosition;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static jakarta.ws.rs.core.Response.Status.CREATED;
 
@@ -45,7 +41,7 @@ public class VehiclePositionResource {
 
     @GET
     @Path("/latest")
-    public Uni<List<VehiclePosition>> getLatestPositionsForRoutes(@QueryParam("routeIds") String routeIdsString) {
+    public Uni<List<Object>> getLatestPositionsForRoutes(@QueryParam("routeIds") String routeIdsString) {
         List<String> routeIds = Arrays.asList(routeIdsString.split(","));
         if (routeIds.isEmpty()) {
             return VehiclePosition.findById(0)
@@ -53,10 +49,13 @@ public class VehiclePositionResource {
         }
         routeIds.forEach(routeId -> Log.info(routeId.toString()));
 
-
-        return  VehiclePosition.list("vehicle.trip.route.routeId in ?1",
-                Sort.by("timestamp").descending(),
-                routeIds);
+        return Vehicle.list("trip.route.routeId in ?1", routeIds)
+                .onItem().transformToMulti(vehicles -> Multi.createFrom().iterable(vehicles))
+                .onItem().castTo(Vehicle.class)
+                .onItem().transformToUniAndConcatenate(vehicle ->
+                        VehiclePosition.find("vehicle.vehicleID = ?1 ORDER BY timestamp DESC", vehicle.vehicleID).firstResult()
+                )
+                .collect().asList();
     }
 
 
