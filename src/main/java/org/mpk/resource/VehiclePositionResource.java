@@ -41,20 +41,19 @@ public class VehiclePositionResource {
 
     @GET
     @Path("/latest")
-    public Uni<List<Object>> getLatestPositionsForRoutes(@QueryParam("routeIds") String routeIdsString) {
+    public Uni<List<VehiclePosition>> getLatestPositionsForRoutes(@QueryParam("routeIds") String routeIdsString) {
         List<String> routeIds = Arrays.asList(routeIdsString.split(","));
         if (routeIds.isEmpty()) {
             return VehiclePosition.findById(0)
                     .onItem().transform(testPosition -> List.of((VehiclePosition) testPosition));
         }
-        routeIds.forEach(routeId -> Log.info(routeId.toString()));
-
         return Vehicle.list("trip.route.routeId in ?1", routeIds)
                 .onItem().transformToMulti(vehicles -> Multi.createFrom().iterable(vehicles))
                 .onItem().castTo(Vehicle.class)
                 .onItem().transformToUniAndConcatenate(vehicle ->
-                        VehiclePosition.find("vehicle.vehicleID = ?1 ORDER BY timestamp DESC", vehicle.vehicleID).firstResult()
-                )
+                    VehiclePosition.find("vehicle.vehicleID = ?1 ORDER BY timestamp DESC", vehicle.vehicleID)
+                    .firstResult())
+                .onItem().castTo(VehiclePosition.class)
                 .collect().asList();
     }
 
