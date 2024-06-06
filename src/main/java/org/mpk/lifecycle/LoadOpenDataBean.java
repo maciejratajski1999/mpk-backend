@@ -25,7 +25,7 @@ public class LoadOpenDataBean {
         Map<String, Class<? extends EntityBase>> fileToEntityMap = new HashMap<>();
         fileToEntityMap.put("trips_test.txt", Trip.class);
         fileToEntityMap.put("routes_test.txt", Route.class);
-        fileToEntityMap.put("stops.txt", Stop.class);
+        fileToEntityMap.put("stops_test.txt", Stop.class);
         return fileToEntityMap;
     }
 
