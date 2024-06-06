@@ -1,4 +1,4 @@
-﻿stop_id,stop_code,stop_name,stop_lat,stop_lon
+stop_id,stop_code,stop_name,stop_lat,stop_lon
 3,18717,"Janówek",51.1980830000,16.9058919700
 16,12526,"Metalowców",51.1330889400,16.9592179100
 35,20332,"Krasińskiego",51.1058589600,17.0433408200

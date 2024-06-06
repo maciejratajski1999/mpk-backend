@@ -8,6 +8,7 @@ import org.hibernate.reactive.mutiny.Mutiny;
 import org.mpk.data.LoadDataFromGTFS;
 import org.mpk.entity.EntityBase;
 import org.mpk.entity.Route;
+import org.mpk.entity.Stop;
 import org.mpk.entity.Trip;
 
 import java.nio.file.Path;
@@ -24,6 +25,7 @@ public class LoadOpenDataBean {
         Map<String, Class<? extends EntityBase>> fileToEntityMap = new HashMap<>();
         fileToEntityMap.put("trips_test.txt", Trip.class);
         fileToEntityMap.put("routes_test.txt", Route.class);
+        fileToEntityMap.put("stops.txt", Stop.class);
         return fileToEntityMap;
     }
 

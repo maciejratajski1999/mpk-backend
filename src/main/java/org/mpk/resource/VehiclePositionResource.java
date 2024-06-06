@@ -43,6 +43,7 @@ public class VehiclePositionResource {
     @Path("/latest")
     public Uni<List<VehiclePosition>> getLatestPositionsForRoutes(@QueryParam("routeIds") String routeIdsString) {
         List<String> routeIds = Arrays.asList(routeIdsString.split(","));
+        //testowa odpowiedź
         if (routeIds.isEmpty()) {
             return VehiclePosition.findById(0)
                     .onItem().transform(testPosition -> List.of((VehiclePosition) testPosition));

@@ -1,6 +1,6 @@
 -- Przykłady dla encji Route
-INSERT INTO Route(route_id, route_type, valid_from) VALUES ('Test', 1, '2024-04-27');
-INSERT INTO Route(route_id, route_type, valid_from) VALUES ('Test2', 2, '2024-04-28');
+INSERT INTO Route(route_id, route_type, valid_from) VALUES ('Test', 0, '2024-04-27');
+INSERT INTO Route(route_id, route_type, valid_from) VALUES ('Test2', 3, '2024-04-28');
 
 -- Przykłady dla encji Trip
 INSERT INTO Trip(trip_id, route_id, trip_headsign, direction_id, shape_id, variant_id) VALUES ('001', 'Test', 'Testowa trasa 1', 1, 0001, 0001);
