@@ -1,4 +1,4 @@
-﻿route_id,service_id,trip_id,trip_headsign,direction_id,shape_id,brigade_id,vehicle_id,variant_id
+route_id,service_id,trip_id,trip_headsign,direction_id,shape_id,brigade_id,vehicle_id,variant_id
 A,3,3_13404996,"Zajezdnia Obornicka",0,837732,2,1,837732
 A,3,3_13405011,"Zajezdnia Obornicka",0,837732,3,1,837732
 A,3,3_13405042,"Zajezdnia Obornicka",0,837732,5,1,837732

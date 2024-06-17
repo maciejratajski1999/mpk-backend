@@ -27,6 +27,7 @@ public class VehicleResource {
         return Vehicle.findById(vehicleId);
     }
 
+
     @POST
     public Uni<Response> create(Vehicle vehicle) {
         if (vehicle == null){

@@ -30,6 +30,7 @@ Uruchom kontener PostgreSQL za pomocą poniższej komendy:
 
 ```bash
 docker run --hostname=147010e54885 --mac-address=02:42:ac:11:00:02 --env=POSTGRES_DB=quarkus_test --env=POSTGRES_USER=quarkus_test --env=POSTGRES_PASSWORD=quarkus_test --env=PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/lib/postgresql/14/bin --env=GOSU_VERSION=1.14 --env=LANG=en_US.utf8 --env=PG_MAJOR=14 --env=PG_VERSION=14.1-1.pgdg110+1 --env=PGDATA=/var/lib/postgresql/data --volume=/var/lib/postgresql/data -p 5432:5432 --restart=no --runtime=runc -d postgres:14.1
+
 ```
 
 Docker powinien automatycznie pobrać potrzebne dependencies z internetu.
@@ -82,6 +83,74 @@ w folderze src/test/script wyślij paczkę z pojazdu o ID 1001 co sekundę, ze �
 ```batch
 .\testVehiclePositions.bat .\trasa.txt 1001 1
 ```
+
+## Struktura Projektu
+
+```text
+├───.idea
+├───.mvn
+│   └───wrapper
+├───.quarkus
+│   └───cli
+│       └───plugins
+├───config
+│       keycloak-keystore.jks - plik konfiguracyjny kontenera Keycloak
+├───src
+│   ├───data
+│   ├───main
+│   │   ├───docker
+│   │   ├───java
+│   │   │   └───org
+│   │   │       └───mpk
+│   │   │           ├───data
+│   │   │           │       LoadDataFromGTFS.java - Klasa do ładowania danych z GTFS.
+│   │   │           │
+│   │   │           ├───entity
+│   │   │           │       EntityBase.java - Klasa bazowa dla wszystkich encji.
+│   │   │           │       Route.java - Pojedyncza linia, np. K, 11, 931
+│   │   │           │       Stop.java - Przystanek
+│   │   │           │       Trip.java - Pojedynczy kurs, np. tramwaj 8 startujący o 16:00 z pętli Karłowice
+│   │   │           │       Vehicle.java - pojedynczy tramwaj bądź autobus na trasie
+│   │   │           │       VehiclePosition.java - zarejestrowane ramki z pozycjami pojazdów
+│   │   │           │
+│   │   │           ├───lifecycle
+│   │   │           │       LoadOpenDataBean.java - Na startupie serwera ładuje dane z OpenData Urzędu Miejskiego
+│   │   │           │
+│   │   │           └───resource
+│   │   └───resources
+│   │       │   application.properties - plik konfiguracyjny aplikacji
+│   │       │   import.sql - przykładowe i testowe uzupełnienie bazy danych
+│   │       │
+│   │       └───META-INF
+│   │           └───resources
+│   │                   index.html - strona główna aplikacji backendowej
+│   └───test
+│       ├───data
+│       ├───java
+│       │   └───org
+│       │       └───mpk
+│       │               ParseDataFromTxtTest.java - przetestuj rozpakowywanie OpenData GTFS do JavaMap
+│       │               RouteTest.java - przetestuj translację z JavaMap do persystentnej encji Route
+│       │
+│       └───script
+│               testVehiclePositions.bat -skrypt symulujący wysyłane ramki przez urządzenie
+│               trasa.txt - przykładowa trasa
+│               trasa2.txt - 2 przykładowa trasa
+└───target
+    ├───classes
+    │   ├───META-INF
+    │   │   └───resources
+    │   └───org
+    └───test-classes
+        └───org
+            └───mpk
+```
+
+
+
+
+
+
 [1]: https://quarkus.io/guides/getting-started-dev-services
 [2]: https://quarkus.io/guides/cli-tooling
 [3]: https://chocolatey.org/
