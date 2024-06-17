@@ -53,10 +53,66 @@ Jeżeli nie stworzysz potrzebnych tablic, Quarkus spróbuje je stworzyć sam.
 
 ### Endpoints API
 
-- `GET http://localhost:8080/routes`
-- `GET http://localhost:8080/routes/{routeId}`
-- `POST http://localhost:8080/routes`
-- 
+- POST /vehiclepositions - Dodawanie ramek z pozycjami pojazdów.
+http://localhost:8080/vehiclepositions ->
+przykładowe wywołanie:
+  
+  ```powershell
+    curl --header "Content-Type: text/plain" --request POST --data "1001;51.117843;17.030428;2024-05-17 05:31:41" http://localhost:8080/vehiclepositions 
+  ```
+
+- GET /vehiclepositions - Lista wszystkich ramek z pozycjami pojazdów.
+  http://localhost:8080/vehiclepositions
+
+- GET /vehiclepositions/{posId} - Szczegółowe informacje o ramce z pozycją pojazdu.
+  http://localhost:8080/vehiclepositions/{posId}
+
+- GET /vehiclepositions/latest - Najnowsze ramki z pozycjami pojazdów.
+  http://localhost:8080/vehiclepositions/latest ->
+przykładowe wywołanie:
+  
+  ```powershell
+  $response = Invoke-WebRequest -Uri "http://localhost:8080/vehiclepositions/latest?routeIds=Test,Test2,K,12,147"
+  $response.Content
+  ```
+
+- POST /trips - Dodawanie nowych kursów.
+  http://localhost:8080/trips
+
+- GET /trips - Lista wszystkich kursów.
+  http://localhost:8080/trips
+
+- GET /trips/{tripId} - Szczegółowe informacje o kursie.
+  http://localhost:8080/trips/{tripId}
+
+- GET /trips/gettrips - Lista kursów spełniających kryteria wyszukiwania.
+  http://localhost:8080/trips/gettrips
+
+- POST /vehicles - Dodawanie nowych pojazdów na trasie.
+  http://localhost:8080/vehicles
+
+- GET /vehicles - Lista wszystkich pojazdów na trasie.
+  http://localhost:8080/vehicles
+
+- GET /vehicles/{vehicleId} - Szczegółowe informacje o pojeździe.
+  http://localhost:8080/vehicles/{vehicleId}
+
+- POST /routes - Dodawanie nowych linii.
+  http://localhost:8080/routes
+
+- GET /routes - Lista wszystkich linii.
+  http://localhost:8080/routes
+
+- GET /routes/{routeId} - Szczegółowe informacje o linii.
+  http://localhost:8080/routes/{routeId}
+
+- GET /stops - Lista wszystkich przystanków.
+  http://localhost:8080/stops
+
+- GET /stops/{stopId} - Szczegółowe informacje o przystanku.
+  http://localhost:8080/stops/{stopId}
+
+ 
 ### Testy
 Po uruchomieniu kontenera PostgreSQL, uruchom aplikację w trybie deweloperskim. Test powinien dodać trasę “Testowa”. Możesz to sprawdzić na endpointcie http://localhost:8080/routes.
 
@@ -80,7 +136,7 @@ curl -X POST -H "Content-Type: application/json" -d '{"vehicleID":1,"trip":{"tri
 ```
 ## Testowa trasa:
 w folderze src/test/script wyślij paczkę z pojazdu o ID 1001 co sekundę, ze źródła trasa.txt:
-```batch
+```bash
 .\testVehiclePositions.bat .\trasa.txt 1001 1
 ```
 
