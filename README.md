@@ -21,7 +21,8 @@ Ten projekt jest oparty na poradniku dostępnym na stronie [Quarkus][1].
   ```bash
   sdk install java 22-graal
   export JAVA_HOME=$(sdk home java 22-graal)
-  export PATH=$JAVA_HOME/bin:$PATH```
+  export PATH=$JAVA_HOME/bin:$PATH
+  ```
 - Zainstaluj Quarkus przez sdkman
   ```sdk install quarkus```
 - [Docker CLI na Ubuntu][7]
