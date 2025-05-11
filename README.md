@@ -18,7 +18,10 @@ Ten projekt jest oparty na poradniku dostępnym na stronie [Quarkus][1].
 - [SDKMAN CLI][6]
   ```curl -s "https://get.sdkman.io" | bash```
 - [JDK 22][4] (dodane do PATH w systemie Ubuntu)
-  ```sdk install java 22-graal```
+  ```bash
+  sdk install java 22-graal
+  export JAVA_HOME=$(sdk home java 22-graal)
+  export PATH=$JAVA_HOME/bin:$PATH```
 - Zainstaluj Quarkus przez sdkman
   ```sdk install quarkus```
 - [Docker CLI na Ubuntu][7]
@@ -30,7 +33,6 @@ Uruchom kontener PostgreSQL za pomocą poniższej komendy:
 
 ```bash
 docker run --hostname=147010e54885 --mac-address=02:42:ac:11:00:02 --env=POSTGRES_DB=quarkus_test --env=POSTGRES_USER=quarkus_test --env=POSTGRES_PASSWORD=quarkus_test --env=PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/lib/postgresql/14/bin --env=GOSU_VERSION=1.14 --env=LANG=en_US.utf8 --env=PG_MAJOR=14 --env=PG_VERSION=14.1-1.pgdg110+1 --env=PGDATA=/var/lib/postgresql/data --volume=/var/lib/postgresql/data -p 5432:5432 --restart=no --runtime=runc -d postgres:14.1
-
 ```
 
 Docker powinien automatycznie pobrać potrzebne dependencies z internetu.
